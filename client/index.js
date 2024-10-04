@@ -1,10 +1,10 @@
 import React from "react"
-import "./styles"
 import { hydrateRoot } from "react-dom/client"
 import { Provider } from "react-redux"
 import { RouterProvider } from "@tata1mg/router"
 import clientRouter from "catalyst-core/router/ClientRouter"
 import configureStore from "@store"
+import "./styles"
 
 const { __ROUTER_INITIAL_DATA__: routerInitialData, __INITIAL_STATE__ } = window
 const store = configureStore(__INITIAL_STATE__ || {})

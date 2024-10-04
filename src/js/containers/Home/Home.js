@@ -1,22 +1,27 @@
-import React from "react"
-import css from "./Home.scss"
+import React, { useEffect } from "react"
+import { getIsAuthenticated } from "@/lib/auth"
+import { useNavigate } from "@tata1mg/router"
+import { Box, Button, Flex } from "@chakra-ui/react"
+import { logout } from "@/lib/auth"
+import Sidebar from "@/components/Sidebar"
 
 function Home() {
+
+
+    const navigate = useNavigate()
+    useEffect(() => {
+        getIsAuthenticated().then((authorized) => {
+            console.log(authorized)
+            if (!authorized) {
+                navigate("/login")
+            }
+        })
+    }, [])
+
     return (
-        <div className={css.app}>
-            <header className={css.appHeader}>
-                <h1 className={css.heading}>Catalyst</h1>
-                <p>Edit files inside src directory and save to reload.</p>
-                <a
-                    className={css.appLink}
-                    href="https://catalyst.1mg.com"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn Catalyst
-                </a>
-            </header>
-        </div>
+        <Flex justify="space-between">
+            <Sidebar />
+        </Flex>
     )
 }
 

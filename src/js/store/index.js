@@ -1,6 +1,6 @@
 import { configureStore as createStore } from "@reduxjs/toolkit"
 import { combineReducers } from "redux"
-import { shellReducer } from "@containers/App/reducer.js"
+import { shellReducer } from "./reducers/reducer.js"
 import fetchInstance from "@api"
 
 /**
