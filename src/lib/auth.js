@@ -1,7 +1,7 @@
 import axios from "axios";
 import { z } from "zod"
 
-const schema = z.object({
+const registerSchema = z.object({
     name: z.string({ required_error: "Name is required" }),
     email: z.string({ required_error: "Email is required" }).email("Invalid email"),
     password: z
@@ -15,8 +15,16 @@ const schema = z.object({
     path: ["confirmPassword"],
 })
 
+const loginSchema = z.object({
+    email: z.string({ required_error: "Email is required" }).email("Invalid email"),
+    password: z
+        .string({ required_error: "Password is required" })
+        .min(8, "Password must be at least 8 characters")
+        .regex(/(?=.*?[#?!@$%^&*-])/, "Password must contain a special character")
+        .regex(/(?=.*?[0-9])/, "Password must contain a number")
+})
+
 export async function login(values) {
-    const loginSchema = schema.pick({ email: true, password: true })
     const { error, success } = loginSchema.safeParse(values)
 
     if (!success) {
@@ -38,7 +46,7 @@ export async function login(values) {
 
 export async function register(values) {
 
-    const { error, success } = schema.safeParse(values)
+    const { error, success } = registerSchema.safeParse(values)
 
     if (!success) {
         return {

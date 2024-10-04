@@ -1,10 +1,10 @@
+import { getClient } from "@/lib/db"
+
 const express = require("express")
 const bcryptjs = require("bcryptjs")
 const jwt = require("jsonwebtoken")
 
 const router = express.Router()
-
-let users = {}
 
 router.get("/", (req, res) => {
     res.send({ message: "hello world" })
@@ -17,16 +17,27 @@ router.post("/login", async (req, res) => {
         return res.status(200).send({ error: "email and password are required" })
     }
 
-    if (typeof users[email] === "undefined") {
-        return res.status(200).send({ error: "User not registered" })
+    const client = getClient()
+
+    let { data: User, error: error1 } = await client
+        .from('User')
+        .select("*")
+        .eq('email', email)
+
+
+    if (error1) {
+        console.log(error1)
+        return res.status(400).send({ error: error1.message })
+    } else if (User.length === 0) {
+        return res.status(400).send({ error: "User not registered" })
     }
 
-    const isSamePassword = await bcryptjs.compare(password, users[email].passwordHash)
+    const isSamePassword = await bcryptjs.compare(password, User[0].passwordHash)
     if (!isSamePassword) {
         return res.status(200).send({ error: "Wrong password" })
     }
 
-    const token = jwt.sign({ name: users[email].name, email }, process.env.JWT_SECRET, {
+    const token = jwt.sign({ id: User[0].id, name: User[0].name, email }, process.env.JWT_SECRET, {
         expiresIn: "1d",
     })
 
@@ -48,14 +59,34 @@ router.post("/register", async (req, res) => {
         return res.status(400).send({ message: "email and password are required" })
     }
 
-    if (typeof users[email] !== "undefined") {
-        return res.status(500).send({ message: "user already exists" })
+    const client = getClient()
+
+    let { data: User, error: error1 } = await client
+        .from('User')
+        .select("*")
+        .eq('email', email)
+
+    if (error1) {
+        console.log(error1)
+        res.send(400).message({ error: error1.message })
+    } else if (User.length > 0) {
+        return res.status(400).send({ error: "User already registered" })
     }
 
     const salt = await bcryptjs.genSalt(10)
     const passwordHash = await bcryptjs.hash(password, salt)
 
-    users[email] = { name, email, passwordHash }
+
+    const { error: error2 } = await client
+        .from('User')
+        .insert([
+            { name, email, passwordHash },
+        ])
+
+    if (error2) {
+        console.log(error2)
+        res.send(400).send({ error: error2.message })
+    }
 
     const token = jwt.sign({ name, email }, process.env.JWT_SECRET, {
         expiresIn: "1d",
@@ -91,8 +122,8 @@ router.get("/authenticated", (req, res) => {
     })
 })
 
-router.get("/users", (req, res) => {
-    res.json(users)
-})
+// router.get("/users", (req, res) => {
+//     res.json(users)
+// })
 
 export default router
