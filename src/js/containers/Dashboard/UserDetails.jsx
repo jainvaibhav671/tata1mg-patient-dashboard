@@ -1,18 +1,22 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { Flex, Heading, Image, Skeleton, Text } from "@chakra-ui/react"
 import { formatDate } from "@/lib/util"
 import { User2 } from "lucide-react"
 import { Link } from "@chakra-ui/react"
 import { useGetUserDetailsQuery } from "@store/api/auth"
 import { useGetAvatarUrlQuery } from "@store/api/storage"
-import { useRouterData } from '@tata1mg/router';
+// import { getUserDetails } from "@/lib/auth"
+// import { useCurrentRouteData } from "@tata1mg/router"
 
 export default function UserDetails() {
 
-    const { data: user, isFetching } = useGetUserDetailsQuery()
-    const { data: avatar_url, isFetching: avatarLoading } = useGetAvatarUrlQuery()
+    const { data: user } = useGetUserDetailsQuery()
+    const { data: avatar_url } = useGetAvatarUrlQuery()
 
-    return !(isFetching || avatarLoading) ?
+    // const { data: routeData, isFetching: routeLoading } = useCurrentRouteData()
+    // console.log(routeData, routeLoading)
+
+    return (typeof user !== "undefined" && typeof avatar_url !== "undefined") &&
         (
             <>
                 <Flex alignItems={"center"} gap={8}>
@@ -35,7 +39,13 @@ export default function UserDetails() {
                     </Flex>
                 </Flex>
             </>
-        ) : (
-            <Skeleton height={150} width={"100%"} />
         )
 }
+
+// UserDetails.clientFunction = async () => {
+//     const user = await getUserDetails()
+//     console.log(user)
+//     return {
+//         user
+//     }
+// }

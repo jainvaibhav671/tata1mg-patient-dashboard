@@ -1,20 +1,10 @@
 import React from "react"
-import { redirect } from "@tata1mg/router"
 import LoginForm from "./LoginForm"
 
 import { Heading, Flex } from '@chakra-ui/react'
 import RegisterForm from "./RegisterForm"
 import { useMounted } from "@/lib/util"
 import { getIsAuthenticated } from "@/lib/auth"
-
-export async function loader() {
-    const authorized = await getIsAuthenticated()
-    if (authorized) {
-        return redirect("/")
-    }
-
-    return null
-}
 
 export function Login() {
     const mounted = useMounted()
@@ -36,12 +26,12 @@ export function Register() {
     )
 }
 
-const clientFetcher = async ({ navigate }) => {
+const fetcher = async ({ navigate }) => {
     const authorized = await getIsAuthenticated()
     if (authorized) {
         return navigate("/")
     }
 }
 
-Login.clientFetcher = clientFetcher;
-Register.clientFetcher = clientFetcher;
+Login.clientFetcher = fetcher;
+Register.clientFetcher = fetcher;
