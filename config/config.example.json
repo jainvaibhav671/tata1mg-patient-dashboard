@@ -9,6 +9,9 @@
     "API_URL": "",
     "JWT_SECRET": "secret",
     "ANALYZE_BUNDLE": false,
+    "SUPABASE_PWD": "password",
+    "SUPABASE_PRJ_URL": "https://xyz.supabase.co",
+    "SUPABASE_ANON_KEY": "anon_key",
     "CLIENT_ENV_VARIABLES": [
         "API_URL"
     ]

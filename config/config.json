@@ -1,0 +1,18 @@
+{
+    "NODE_SERVER_HOSTNAME": "0.0.0.0",
+    "NODE_SERVER_PORT": 3005,
+    "WEBPACK_DEV_SERVER_HOSTNAME": "0.0.0.0",
+    "WEBPACK_DEV_SERVER_PORT": 3006,
+    "BUILD_OUTPUT_PATH": "build",
+    "PUBLIC_STATIC_ASSET_PATH": "/assets/",
+    "PUBLIC_STATIC_ASSET_URL": "http://0.0.0.0:3005",
+    "API_URL": "",
+    "JWT_SECRET": "umRD1p9deV3IGuDYF2UTjwtQHxbawBFuwmEHSHVoZv0xqNeq43UArAo8Hgx8GufUj4euD8vnn0NhhVLi1YFsCw==",
+    "ANALYZE_BUNDLE": false,
+    "SUPABASE_PWD": "jyfKj05ktAZRIQF7",
+    "SUPABASE_PRJ_URL": "https://yvgyqaexdqojnjybctsu.supabase.co",
+    "SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl2Z3lxYWV4ZHFvam5qeWJjdHN1Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MjgwODE5NTAsImV4cCI6MjA0MzY1Nzk1MH0.R01-_YddLgyiHK9Jrvy8zsguvSSJjf36CtWw5_Nr2ik",
+    "CLIENT_ENV_VARIABLES": [
+        "API_URL"
+    ]
+}

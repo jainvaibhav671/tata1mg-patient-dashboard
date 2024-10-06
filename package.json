@@ -1,10 +1,10 @@
 {
-    "name": "tata1mg",
+    "name": "tata1mg-patient-dashboard",
     "version": "1.0.0",
     "scripts": {
-        "start": "catalyst start",
+        "dev": "catalyst start",
         "build": "catalyst build",
-        "serve": "catalyst serve",
+        "start": "catalyst serve",
         "lint": "eslint .",
         "devBuild": "catalyst devBuild",
         "devServe": "catalyst devServe"
