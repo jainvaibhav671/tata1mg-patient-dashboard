@@ -1,28 +1,27 @@
-import React, { useEffect } from "react"
+import React from "react"
 import { getIsAuthenticated } from "@/lib/auth"
-import { useNavigate } from "@tata1mg/router"
-import { Box, Button, Flex } from "@chakra-ui/react"
-import { logout } from "@/lib/auth"
+import { Outlet, useLoaderData } from "@tata1mg/router"
+import { Flex } from "@chakra-ui/react"
 import Sidebar from "@/components/Sidebar"
+import Header from "@/components/Header"
 
 function Home() {
-
-
-    const navigate = useNavigate()
-    useEffect(() => {
-        getIsAuthenticated().then((authorized) => {
-            console.log(authorized)
-            if (!authorized) {
-                navigate("/login")
-            }
-        })
-    }, [])
-
     return (
-        <Flex justify="space-between">
+        <Flex width={"100vw"} height={"100vh"} gap={0}>
             <Sidebar />
+            <Flex width="100%" direction={"column"} height="100%">
+                <Header />
+                <Outlet />
+            </Flex>
         </Flex>
     )
+}
+
+Home.clientFetcher = async ({ navigate }) => {
+    const authorized = await getIsAuthenticated()
+    if (!authorized) {
+        return navigate("/login")
+    }
 }
 
 export default Home

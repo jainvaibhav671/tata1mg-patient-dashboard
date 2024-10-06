@@ -1,7 +1,7 @@
 import React from "react"
 import { hydrateRoot } from "react-dom/client"
 import { Provider } from "react-redux"
-import { RouterProvider } from "@tata1mg/router"
+import { RouterProvider, createBrowserRouter } from "@tata1mg/router"
 import clientRouter from "catalyst-core/router/ClientRouter"
 import configureStore from "@store"
 import "./styles"

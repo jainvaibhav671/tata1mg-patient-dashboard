@@ -1,6 +1,6 @@
 import React, { useState } from "react"
-import { register } from "@/lib/auth"
-
+import PasswordInput from "@/components/PasswordInput"
+import { useRegisterMutation } from "@store/api/auth"
 import {
     FormControl,
     FormLabel,
@@ -19,23 +19,21 @@ export default function RegisterForm() {
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
+    const [register] = useRegisterMutation()
 
     const onSubmit = async (e) => {
         e.preventDefault()
         setIsSubmitting(true)
         const formData = new FormData(e.target)
 
-        const name = formData.get("name")
-        const email = formData.get("email")
-        const password = formData.get("password")
-        const confirmPassword = formData.get("confirmPassword")
+        const values = Object.fromEntries(formData.entries())
 
-        const res = await register({ name, email, password, confirmPassword })
-        if (!res.success) {
-            setErrors(res.errors)
+        const { data } = await register(values)
+        if (!data.success) {
+            setErrors(data.errors)
         }
 
-        if (res.success) {
+        if (data.success) {
             navigate("/")
         }
         setIsSubmitting(false)
@@ -62,7 +60,7 @@ export default function RegisterForm() {
                     <Flex direction={"column"} gap={2}>
                         <FormControl isRequired>
                             <FormLabel htmlFor="password">Password</FormLabel>
-                            <Input name="password" id="password" type="password" />
+                            <PasswordInput name="password" id="password" />
                             {typeof errors.password !== "undefined" && (
                                 <Flex direction="column" mt={2} gap={1}>
                                     {errors.password.map((e, i) => <Text color="red" key={`error-${i}`}>{e}</Text>)}
@@ -73,7 +71,7 @@ export default function RegisterForm() {
                     <Flex direction={"column"} gap={2}>
                         <FormControl isRequired>
                             <FormLabel htmlFor="confirmPassword">Confirm Password</FormLabel>
-                            <Input name="confirmPassword" id="confirmPassword" type="password" />
+                            <PasswordInput name="confirmPassword" id="confirmPassword" />
                             {typeof errors.confirmPassword !== "undefined" && (
                                 <Flex direction="column" mt={2} gap={1}>
                                     {errors.confirmPassword.map((e, i) => <Text color="red" key={`error-${i}`}>{e}</Text>)}

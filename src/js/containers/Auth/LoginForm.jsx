@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { login } from "@/lib/auth"
+// import { login } from "@/lib/auth"
 
 import {
     FormControl,
@@ -13,12 +13,16 @@ import {
     Spinner
 } from '@chakra-ui/react'
 import { useNavigate } from "@tata1mg/router"
+import PasswordInput from "@/components/PasswordInput"
+import { useLoginMutation } from "@store/api/auth"
 
 export default function LoginForm() {
 
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [errors, setErrors] = useState({})
     const navigate = useNavigate()
+
+    const [login] = useLoginMutation()
 
     const onSubmit = async (e) => {
         e.preventDefault()
@@ -29,12 +33,12 @@ export default function LoginForm() {
         const email = formData.get("email")
         const password = formData.get("password")
 
-        const res = await login({ email, password })
-        if (!res.success) {
-            setErrors(res.errors)
+        const { data } = await login({ email, password })
+        if (!data.success) {
+            setErrors(data.errors)
         }
 
-        if (res.success) {
+        if (data.success) {
             navigate("/")
         }
 
@@ -55,7 +59,7 @@ export default function LoginForm() {
                     <Flex direction={"column"} gap={2}>
                         <FormControl isRequired>
                             <FormLabel htmlFor="password">Password</FormLabel>
-                            <Input name="password" id="password" type="password" />
+                            <PasswordInput name="password" id="password" />
                             {typeof errors.password !== "undefined" && (
                                 <Flex direction="column" mt={2} gap={1}>
                                     {errors.password.map((e, i) => <Text color="red" key={`error-${i}`}>{e}</Text>)}

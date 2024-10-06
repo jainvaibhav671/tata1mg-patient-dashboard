@@ -1,6 +1,11 @@
 import { configureStore as createStore } from "@reduxjs/toolkit"
 import { combineReducers } from "redux"
 import { shellReducer } from "./reducers/reducer.js"
+
+import { prescriptionApi } from "./api/prescriptions"
+import { authApi } from "./api/auth"
+import { storageApi } from "./api/storage"
+
 import fetchInstance from "@api"
 
 /**
@@ -13,13 +18,21 @@ import fetchInstance from "@api"
 const configureStore = (initialState) => {
     const api = fetchInstance
     const store = createStore({
-        reducer: combineReducers({ shellReducer }),
+        reducer: {
+            shellReducer,
+            [prescriptionApi.reducerPath]: prescriptionApi.reducer,
+            [authApi.reducerPath]: authApi.reducer,
+            [storageApi.reducerPath]: storageApi.reducer,
+        },
         middleware: (getDefaultMiddleware) =>
             getDefaultMiddleware({
                 thunk: {
                     extraArgument: { api },
                 },
-            }),
+            })
+                .concat(prescriptionApi.middleware)
+                .concat(authApi.middleware)
+                .concat(storageApi.middleware),
         preloadedState: initialState,
     })
     return store
