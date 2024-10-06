@@ -21,4 +21,4 @@ EXPOSE 3005
 EXPOSE 3006
 
 # CMD ["ls"]
-CMD ["npm", "run", "serve"]
+CMD ["npm", "run", "start"]
