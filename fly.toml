@@ -15,6 +15,13 @@ app = 'tata1mg-patient-dashboard'
   min_machines_running = 0
   processes = ['app']
 
+[[services]]
+  internal_port = 3006
+  protocol = "tcp"
+  auto_stop_machines = "stop"
+  auto_start_machines = true
+  min_machines_running = 0
+
 [[vm]]
   memory = '1gb'
   cpu_kind = 'shared'
