@@ -7,6 +7,14 @@ app = 'tata1mg-patient-dashboard'
 
 [build]
 
+[http_service]
+  internal_port = 3005
+  force_https = true
+  auto_stop_machines = true
+  auto_start_machines = true
+  min_machines_running = 0
+  processes = ["app"]
+
 [[services]]
   http_checks = []
   internal_port = 3005
@@ -20,21 +28,10 @@ app = 'tata1mg-patient-dashboard'
     type = "connections"
 
   [[services.ports]]
-    handlers = ["tls", "http"]
-    port = 3005
-
-[[services]]
-  http_checks = []
-  internal_port = 3006
-  processes = ["app"]
-  protocol = "tcp"
-  script_checks = []
-
-  [services.concurrency]
-    hard_limit = 25
-    soft_limit = 20
-    type = "connections"
+    force_https = true
+    handlers = ["http"]
+    port = 80
 
   [[services.ports]]
     handlers = ["tls", "http"]
-    port = 3006
+    port = 443

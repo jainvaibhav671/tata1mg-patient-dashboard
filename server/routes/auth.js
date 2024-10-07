@@ -90,8 +90,9 @@ router.post("/login", async (req, res) => {
     res.cookie('session', token, {
         expires: new Date(Date.now() + 3600000),
         path: '/',
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
+        sameSite: "none",
     });
 
     res.status(200).send({ success: true, message: "Logged in successfully" })
@@ -152,8 +153,9 @@ router.post("/register", async (req, res) => {
     res.cookie('session', token, {
         expires: new Date(Date.now() + 3600000),
         path: '/',
-        secure: true,
+        secure: process.env.NODE_ENV === "production",
         httpOnly: true,
+        sameSite: "none",
     });
 
     res.status(200).send({ success: true, errors: {}, message: "Registered successfully" })
@@ -200,7 +202,8 @@ router.get("/authenticated", (req, res) => {
         return res.status(200).send({ authorized: false })
     }
 
-    jwt.verify(token, process.env.JWT_SECRET, (err) => {
+    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+        console.log(decoded)
         if (err) {
             return res.status(200).send({ authorized: false })
         }

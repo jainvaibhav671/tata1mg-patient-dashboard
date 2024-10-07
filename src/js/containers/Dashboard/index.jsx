@@ -1,16 +1,14 @@
-import { Grid, Skeleton, GridItem } from "@chakra-ui/react"
+import { Grid, GridItem } from "@chakra-ui/react"
 import React from "react"
 import { getUserDetails } from "@/lib/auth"
 import { getAvatarUrl } from "@/lib/storage"
 import loadable from "@loadable/component"
 
 const UserDetails = loadable(() => import("./UserDetails"), {
-    fallback: <Skeleton height={150} width={"100%"} />,
     ssr: false
 })
 
 const OngoingPrescriptions = loadable(() => import("./OngoingPrescriptions"), {
-    fallback: <div>Loading...</div>,
     ssr: false
 })
 

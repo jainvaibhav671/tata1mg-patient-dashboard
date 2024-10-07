@@ -1,12 +1,7 @@
 {
-    "rewrites": [
-        {
-            "source": "/:path*",
-            "destination": "/:path*"
-        },
-        {
-            "source": "/(.*)",
-            "destination": "/"
-        }
-    ]
+    "buildCommand": "npm run build",
+    "installCommand": "npm install",
+    "devCommand": "npm run dev",
+    "startCommand": "npm run start",
+    "outputDirectory": ".",
 }

@@ -1,9 +1,17 @@
 import React from "react"
 import { getIsAuthenticated } from "@/lib/auth"
-import { Outlet, useLoaderData } from "@tata1mg/router"
+import { Outlet } from "@tata1mg/router"
 import { Flex } from "@chakra-ui/react"
-import Sidebar from "@/components/Sidebar"
-import Header from "@/components/Header"
+// import Sidebar from "@/components/Sidebar"
+// import Header from "@/components/Header"
+import loadable from "@loadable/component"
+
+const Sidebar = loadable(() => import("@/components/Sidebar"), {
+    ssr: false
+})
+const Header = loadable(() => import("@/components/Header"), {
+    ssr: false
+})
 
 function Home() {
     return (

@@ -4,7 +4,12 @@ import { Head, Body } from "catalyst-core"
 function Document(props) {
     return (
         <html lang="en">
-            <Head {...props}></Head>
+            <Head {...props}>
+                <title>Patient Dashboard</title>
+                <meta name="description" content="Patient Dashboard" />
+                <meta name="viewport" content="width=device-width, initial-scale=1" />
+                <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests" />
+            </Head>
             <Body {...props} />
         </html>
     )

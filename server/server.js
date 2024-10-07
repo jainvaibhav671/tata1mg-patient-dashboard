@@ -1,9 +1,13 @@
 const express = require("express")
 const path = require("path")
 const routes = require("./routes")
+const cors = require("cors")
 // Server middlewares are added here.
 
 export function addMiddlewares(app) {
+
+    app.use(cors())
+
     app.use("/favicon.ico", express.static(path.join(__dirname, "../public/favicon.ico")))
     app.use(express.json())
     app.use(express.urlencoded({ extended: true }))
