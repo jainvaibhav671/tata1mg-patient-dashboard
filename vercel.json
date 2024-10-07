@@ -3,5 +3,5 @@
     "installCommand": "npm install",
     "devCommand": "npm run dev",
     "startCommand": "npm run start",
-    "outputDirectory": ".",
+    "outputDirectory": "."
 }
