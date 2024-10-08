@@ -1,5 +1,6 @@
 // Need to use the React-specific entry point to import createApi
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { createPrescription } from '../../../lib/prescription'
 
 // Define a service using a base URL and expected endpoints
 export const prescriptionApi = createApi({
@@ -26,6 +27,15 @@ export const prescriptionApi = createApi({
             transformResponse: (response) => response.data,
             providesTags: (result, err, id) => [{ type: 'Prescriptions', id }],
         }),
+
+        createPrescription: builder.mutation({
+            query: (body) => ({
+                url: '/create',
+                method: 'POST',
+                body,
+            }),
+            invalidatesTags: (result, error, id) => [{ type: 'Prescriptions', id }],
+        })
     }),
 })
 

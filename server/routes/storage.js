@@ -39,6 +39,10 @@ router.post('/upload', upload.single("avatar_img"), async (req, res) => {
     try {
         const { originalname, path } = req.file;
 
+        if (originalname.length == 0) {
+            return;
+        }
+
         // Get the session cookie
         const token = req.cookies.session;
         if (!token) {
@@ -106,6 +110,10 @@ router.get("/get-avatar-url", async (req, res) => {
             .from('User')
             .select("avatar_img")
             .eq('id', decoded.id)
+
+        if (!User[0].avatar_img) {
+            return res.status(200).send({ url: null })
+        }
 
         if (User.length > 0) {
             const { data: { publicUrl } } = await client.storage

@@ -11,19 +11,21 @@ import { LogOut, User2 } from "lucide-react"
 import { useMounted } from "@/lib/util"
 import { Link } from "@chakra-ui/react"
 import { logout } from "@/lib/auth"
-import { useGetAvatarUrlQuery } from "../js/store/api/storage"
+import { useGetAvatarUrlQuery } from "@store/api/storage"
 
 export default function UserButton() {
 
-    const { data: avatarUrl, isLoading } = useGetAvatarUrlQuery()
+    const { data: avatarUrl } = useGetAvatarUrlQuery()
 
     const mounted = useMounted()
     if (!mounted) return null
 
+    const isAvatar = avatarUrl !== null
+
     return (
         <Menu>
             <MenuButton variant={"link"} as={Button}>
-                {!isLoading ? <Image rounded={"full"} width={50} height={50} src={avatarUrl} alt="Avatar" /> : <User2 />}
+                {isAvatar ? <Image rounded={"full"} width={50} height={50} src={avatarUrl} alt="Avatar" /> : <User2 width={24} height={24} />}
             </MenuButton>
             <MenuList>
                 <Link href="/profile">

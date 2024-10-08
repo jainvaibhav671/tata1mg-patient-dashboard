@@ -92,6 +92,8 @@ export async function updateUserDetails(formData) {
         }
     }
 
+    console.log(Object.fromEntries(formData.entries()))
+
     const res = await axios.post("/api/storage/upload", formData)
 
     values.avatar_img = res.data.file_name
@@ -102,6 +104,7 @@ export async function updateUserDetails(formData) {
     // upload the file to supabase storage
 
     if (typeof errorMessage !== "undefined") {
+        console.log("update-user-details", errorMessage)
         return {
             success: false,
             errors: { formError: errorMessage }

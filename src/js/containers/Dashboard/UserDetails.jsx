@@ -1,12 +1,12 @@
 import React from "react"
-import { Flex, Heading, Image, Skeleton, Text } from "@chakra-ui/react"
+import { Flex, Heading, Image, Text } from "@chakra-ui/react"
 import { formatDate } from "@/lib/util"
 import { User2 } from "lucide-react"
 import { Link } from "@chakra-ui/react"
 import { useGetUserDetailsQuery } from "@store/api/auth"
 import { useGetAvatarUrlQuery } from "@store/api/storage"
 // import { getUserDetails } from "@/lib/auth"
-// import { useCurrentRouteData } from "@tata1mg/router"
+import { useCurrentRouteData } from "@tata1mg/router"
 
 export default function UserDetails() {
 
@@ -16,11 +16,11 @@ export default function UserDetails() {
     // const { data: routeData, isFetching: routeLoading } = useCurrentRouteData()
     // console.log(routeData, routeLoading)
 
-    return (typeof user !== "undefined" && typeof avatar_url !== "undefined") &&
+    return (typeof user !== "undefined") &&
         (
             <>
                 <Flex alignItems={"center"} gap={8}>
-                    {avatar_url !== "undefined" ? <Image rounded={"full"} width={150} height={150} src={avatar_url} alt={user.name} /> : <User2 size={64} />}
+                {avatar_url !== null ? <Image rounded={"full"} width={150} height={150} src={avatar_url} alt={user.name} /> : <User2 size={64} />}
                     <Flex direction="column" gap={4}>
                         <Heading>{user.name}</Heading>
                         <Flex direction={"column"} gap={3}>
@@ -42,10 +42,10 @@ export default function UserDetails() {
         )
 }
 
-// UserDetails.clientFunction = async () => {
-//     const user = await getUserDetails()
-//     console.log(user)
-//     return {
-//         user
-//     }
-// }
+UserDetails.clientFetcher = async () => {
+    const user = await getUserDetails()
+    console.log(user)
+    return {
+        user
+    }
+}

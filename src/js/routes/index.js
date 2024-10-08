@@ -8,7 +8,6 @@ const routes = [
     {
         path: "/",
         component: Home,
-        id: "root",
         children: [
             {
                 path: "/",

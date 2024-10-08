@@ -2,8 +2,6 @@ import React from "react"
 import { getIsAuthenticated } from "@/lib/auth"
 import { Outlet } from "@tata1mg/router"
 import { Flex } from "@chakra-ui/react"
-// import Sidebar from "@/components/Sidebar"
-// import Header from "@/components/Header"
 import loadable from "@loadable/component"
 
 const Sidebar = loadable(() => import("@/components/Sidebar"), {
@@ -27,6 +25,7 @@ function Home() {
 
 Home.clientFetcher = async ({ navigate }) => {
     const authorized = await getIsAuthenticated()
+    console.log("home", authorized)
     if (!authorized) {
         return navigate("/login")
     }

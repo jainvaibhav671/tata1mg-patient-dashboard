@@ -188,7 +188,6 @@ router.post("/update-profile", async (req, res) => {
         console.log(error)
         return res.status(200).send({ error: "Unauthorized" })
     }
-
 })
 
 router.get("/logout", (req, res) => {
@@ -203,8 +202,8 @@ router.get("/authenticated", (req, res) => {
     }
 
     jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
-        console.log(decoded)
         if (err) {
+            console.log(err)
             return res.status(200).send({ authorized: false })
         }
         res.status(200).send({ authorized: true })

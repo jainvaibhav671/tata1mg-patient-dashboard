@@ -1,5 +1,5 @@
 import React, { useState } from "react"
-import { Flex, Heading, Badge, Button, useDisclosure } from "@chakra-ui/react"
+import { Flex, Text, Heading, Badge, Button, useDisclosure } from "@chakra-ui/react"
 import {
     Table,
     Thead,
@@ -14,7 +14,6 @@ import {
     ModalOverlay,
     ModalContent,
     ModalHeader,
-    ModalFooter,
     ModalBody,
     ModalCloseButton,
 } from '@chakra-ui/react'
@@ -24,7 +23,7 @@ import MedicationTable from "../Prescriptions/MedicationTable"
 
 export default function OngoingPrescriptions() {
     const { isOpen, onOpen, onClose } = useDisclosure()
-    const { data: ongoingPrescriptions, error, isLoading } = useGetOngoingPrescriptionsQuery()
+    const { data: ongoingPrescriptions, error } = useGetOngoingPrescriptionsQuery()
     const [medicines, setMedicines] = useState([])
 
     if (error) {
@@ -34,18 +33,18 @@ export default function OngoingPrescriptions() {
     return (
         <Flex direction={"column"} gap={12}>
             <Heading>Ongoing Prescriptions</Heading>
-            <TableContainer>
-                <Table variant='simple'>
-                    <Thead>
-                        <Tr>
-                            <Th>Prescription</Th>
-                            <Th>Prescribed By</Th>
-                            <Th>Symptoms</Th>
-                            <Th></Th>
-                        </Tr>
-                    </Thead>
-                    <Tbody>
-                        {typeof ongoingPrescriptions !== "undefined" && ongoingPrescriptions.map((prescription) => (
+            {(typeof ongoingPrescriptions !== "undefined" && ongoingPrescriptions.length > 0) ? ongoingPrescriptions.map((prescription) => (
+                <TableContainer>
+                    <Table variant='simple'>
+                        <Thead>
+                            <Tr>
+                                <Th>Prescription</Th>
+                                <Th>Prescribed By</Th>
+                                <Th>Symptoms</Th>
+                                <Th></Th>
+                            </Tr>
+                        </Thead>
+                        <Tbody>
                             <Tr cursor={"pointer"} key={prescription.id}>
                                 <Td>{prescription.name}</Td>
                                 <Td>{prescription.prescribed_by}</Td>
@@ -80,10 +79,13 @@ export default function OngoingPrescriptions() {
                                     </Modal>
                                 </Td>
                             </Tr>
-                        ))}
-                    </Tbody>
-                </Table>
-            </TableContainer>
+
+                        </Tbody>
+                    </Table>
+                </TableContainer>
+            )) : (
+                <Text>No ongoing prescriptions</Text>
+            )}
         </Flex>
     )
 }

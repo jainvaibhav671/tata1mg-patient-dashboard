@@ -1,5 +1,5 @@
 import React from "react"
-import { Flex, Heading } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
 import UserButton from "./UserButton"
 
 export default function Header() {
